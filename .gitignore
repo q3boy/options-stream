@@ -1,14 +1,7 @@
-lib-cov
-*.seed
-*.log
-*.csv
-*.dat
-*.out
-*.pid
-*.gz
+/node_modules/
+/out/test
+/tmp
+/*.sublime*
 
-pids
-logs
-results
-
-npm-debug.log
+/.DS_Store
+/coverage.html
