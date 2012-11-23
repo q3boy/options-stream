@@ -2,7 +2,7 @@
   "name": "options-stream",
   "main": "index.js",
   "version": "0.0.5",
-  "description": "load options with stream mode, option file can be json/ini/yaml/ion file ",
+  "description": "load options with stream mode, option file can be json/ini/yaml/ion file",
   "author": {
     "name": "q3boy",
     "email": "q3boy1@gmail.com"
@@ -24,9 +24,9 @@
     "ion": ">=0.5.8"
   },
   "devDependencies": {
-    "jake-tools": ">=0.0.6",
+    "jake-tools": ">= 0.0.6",
     "expect.js": ">= 0.2.0",
-    "jake": ">=0.5.0"
+    "jake": ">= 0.5.0"
   },
   "scripts": {
     "prepublish": "make all",
