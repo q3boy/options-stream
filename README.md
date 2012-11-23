@@ -1,5 +1,8 @@
 #Options Stream
 
+![travis build info](https://api.travis-ci.org/q3boy/options-stream.png)
+
+
 ```javascript
 var os = require('options-stream');
 
@@ -12,3 +15,4 @@ var options = os({ // code default options
 , 'etc/hotfix.ion' // overwrite options
 );
 ```
+

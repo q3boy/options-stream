@@ -23,7 +23,7 @@ clean1:
 test: clean _test clean1
 
 test-cov: clean
-	@jake
+	@./node_modules/.bin/jake
 
 _test:
 	@mkdir -p out/test
