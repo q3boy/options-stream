@@ -6,7 +6,7 @@
 
 -BIN_MOCHA := ./node_modules/.bin/mocha
 -BIN_JSCOVER := ./node_modules/.bin/jscover
--BIN_COFFEE := ./node_modules/coffee-script/bin/coffee -c
+-BIN_COFFEE := ./node_modules/coffee-script/bin/coffee
 -BIN_YAML := ./node_modules/.bin/yaml2json -sp
 
 -TESTS := $(shell find tests -type f -name test-*)
@@ -35,14 +35,14 @@ dev: clean json
 	@$(-BIN_MOCHA) \
 		--colors \
 		--compilers coffee:coffee-script \
-		--reporter spec \
+		--reporter list \
 		--growl \
 		$(-TESTS)
 
 test: clean json
 	@$(-BIN_MOCHA) \
 		--compilers coffee:coffee-script \
-		--reporter spec \
+		--reporter tap \
 		$(-TESTS)
 
 release: dev
@@ -51,7 +51,7 @@ release: dev
 	@cp -r $(-RELEASE_COPY) $(-RELEASE_DIR)
 
 	@echo "compile coffee-script files"
-	@$(-BIN_COFFEE) -b $(-COFFEE_RELEASE)
+	@$(-BIN_COFFEE) -cb $(-COFFEE_RELEASE)
 	@rm -f $(-COFFEE_RELEASE)
 
 	@echo "all codes in \"$(-RELEASE_DIR)\""
@@ -63,25 +63,37 @@ test-cov: clean json
 	@cp -r $(-COVERAGE_COPY) $(-COVERAGE_DIR)
 
 	@echo "compile coffee-script files"
-	@$(-BIN_COFFEE) -b $(-COFFEE_COVERAGE)
+	@$(-BIN_COFFEE) -cb $(-COFFEE_COVERAGE)
 	@rm -f $(-COFFEE_COVERAGE)
 
 	@echo "generate coverage files"
 	@$(-BIN_JSCOVER) $(-COVERAGE_DIR)/lib $(-COVERAGE_DIR)/lib
 
-	@echo "run coverage test"
+	@echo "run test"
 	@$(-BIN_MOCHA) \
-		--reporter spec \
+		--reporter list \
 		$(-COVERAGE_TESTS)
 
 	@echo "make coverage report"
-	@$(-BIN_MOCHA) \
-		--reporter html-cov \
-		$(-COVERAGE_TESTS) \
-		> $(-COVERAGE_FILE)
 
-	@echo "test report saved \"$(-COVERAGE_FILE)\""
-	@if [ `echo $$OSTYPE | grep -c 'darwin'` -eq 1 ]; then open $(-COVERAGE_FILE); fi
+	@if [ `echo $$OSTYPE | grep -c 'darwi1n'` -eq 1 ]; then \
+		echo "coverage info"; \
+		$(-BIN_MOCHA) \
+			--reporter html-cov \
+			$(-COVERAGE_TESTS) \
+			> $(-COVERAGE_FILE); \
+		echo "test report saved \"$(-COVERAGE_FILE)\""; \
+		open $(-COVERAGE_FILE); \
+	else \
+		$(-BIN_MOCHA) \
+			--reporter json-cov \
+			$(-COVERAGE_TESTS) \
+			> $(-COVERAGE_DIR)/cov.json; \
+		echo "cov = require './$(-COVERAGE_DIR)/cov.json'\npad = (num) ->\n  if num < 10 then '   ' + num.toString()\n  else if num < 100 then '  ' + num.toString()\n  else if num < 1000 then ' ' + num.toString()\n  else num.toString()\ncolor = (cover) ->\n  if cover >= 90 then '\x1B[32m'\n  else if cover >= 80 then '\x1B[36m'\n  else if cover >= 70 then '\x1B[33m'\n  else '\x1B[31m'\nend = '\x1B[0m'\nconsole.log '---------- \x1B[36mSummary' + end + ' ----------'\nconsole.log 'coverage: ', color(cov.coverage) + Math.round(cov.coverage) + '%' + end\nconsole.log 'sloc:     ', cov.sloc, 'lines'\nconsole.log 'hits:     ', cov.hits, 'lines'\nconsole.log 'misses:   ', cov.misses, 'lines'\nfor file in cov.files\n  console.log '---- \x1B[36m' + file.filename+':', color(file.coverage) + Math.round(file.coverage) + '%', end + '----'\n  for num, line of file.source\n    if line.coverage < 0 and line.coverage isnt ''\n      head = '\x1B[31m'\n    else\n      head = '\x1B[32m'\n    console.log head + pad(num), '|', line.source + end" | $(-BIN_COFFEE) --stdio ; \
+	fi
+
+
+
 
 .-PHONY: default
 
