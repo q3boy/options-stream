@@ -76,7 +76,7 @@ test-cov: clean json
 
 	@echo "make coverage report"
 
-	@if [ `echo $$OSTYPE | grep -c 'darwi1n'` -eq 1 ]; then \
+	@if [ `echo $$OSTYPE | grep -c 'darwin'` -eq 1 ]; then \
 		echo "coverage info"; \
 		$(-BIN_MOCHA) \
 			--reporter html-cov \
@@ -89,11 +89,8 @@ test-cov: clean json
 			--reporter json-cov \
 			$(-COVERAGE_TESTS) \
 			> $(-COVERAGE_DIR)/cov.json; \
-		echo "cov = require './$(-COVERAGE_DIR)/cov.json'\npad = (num) ->\n  if num < 10 then '   ' + num.toString()\n  else if num < 100 then '  ' + num.toString()\n  else if num < 1000 then ' ' + num.toString()\n  else num.toString()\ncolor = (cover) ->\n  if cover >= 90 then '\x1B[32m'\n  else if cover >= 80 then '\x1B[36m'\n  else if cover >= 70 then '\x1B[33m'\n  else '\x1B[31m'\nend = '\x1B[0m'\nconsole.log '---------- \x1B[36mSummary' + end + ' ----------'\nconsole.log 'coverage: ', color(cov.coverage) + Math.round(cov.coverage) + '%' + end\nconsole.log 'sloc:     ', cov.sloc, 'lines'\nconsole.log 'hits:     ', cov.hits, 'lines'\nconsole.log 'misses:   ', cov.misses, 'lines'\nfor file in cov.files\n  console.log '---- \x1B[36m' + file.filename+':', color(file.coverage) + Math.round(file.coverage) + '%', end + '----'\n  for num, line of file.source\n    if line.coverage < 0 and line.coverage isnt ''\n      head = '\x1B[31m'\n    else\n      head = '\x1B[32m'\n    console.log head + pad(num), '|', line.source + end" | $(-BIN_COFFEE) --stdio ; \
+		echo "cov = require './$(-COVERAGE_DIR)/cov.json'\npad = (num) ->\n  if num < 10 then '   ' + num.toString()\n  else if num < 100 then '  ' + num.toString()\n  else if num < 1000 then ' ' + num.toString()\n  else num.toString()\ncolor = (cover) ->\n  if cover >= 90 then '\x1B[32m'\n  else if cover >= 80 then '\x1B[36m'\n  else if cover >= 70 then '\x1B[33m'\n  else '\x1B[31m'\nend = '\x1B[0m'\nconsole.log '---------- \x1B[36mSummary' + end + ' ----------'\nconsole.log 'coverage: ', color(cov.coverage) + Math.round(cov.coverage) + '%' + end\nconsole.log 'sloc:     ', cov.sloc, 'lines'\nconsole.log 'hits:     ', cov.hits, 'lines'\nconsole.log 'misses:   ', cov.misses, 'lines'\nfor file in cov.files\n  console.log '---- \x1B[36m' + file.filename+':', color(file.coverage) + Math.round(file.coverage) + '%', end + '----'\n  for num, line of file.source\n    if line.coverage is 0 \n      head = '\x1B[31m'\n    else\n      head = '\x1B[32m'\n    console.log head + pad(num), '|', line.source + end" | $(-BIN_COFFEE) --stdio ; \
 	fi
-
-
-
 
 .-PHONY: default
 
