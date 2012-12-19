@@ -1,7 +1,7 @@
 {
   "name": "options-stream",
   "main": "index.js",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "load options with stream mode, option file can be json/ini/yaml/ion file",
   "author": {
     "name": "q3boy",
