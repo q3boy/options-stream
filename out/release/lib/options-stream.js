@@ -13,15 +13,13 @@ ini = require('ini');
 ion = require('ion/lib/ion-min');
 
 merge = function(o1, o2) {
-  var k;
+  var iso1, iso2, k;
   for (k in o2) {
-    if (typeof o2[k] === 'object' && !(o2[k] instanceof Array) && !(o2[k] instanceof Buffer)) {
-      if (typeof o1[k] !== 'object' || o1[k] instanceof Array || o1[k] instanceof Buffer) {
-        o1[k] = o2[k];
-      } else {
-        merge(o1[k], o2[k]);
-      }
-    } else {
+    iso1 = typeof o1[k] === 'object' && o2[k] !== null && 0 === o1[k].constructor.toString().indexOf('function Object()');
+    iso2 = typeof o2[k] === 'object' && o2[k] !== null && 0 === o2[k].constructor.toString().indexOf('function Object()');
+    if (iso1 && iso2) {
+      merge(o1[k], o2[k]);
+    } else if (o2[k] !== void 0) {
       o1[k] = o2[k];
     }
   }
