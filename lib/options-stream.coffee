@@ -6,7 +6,7 @@ ion = require 'ion/lib/ion-min'
 merge = (o1, o2) ->
   for k of o2
     # console.log k, o1[k], o2[k], typeof  o1[k], typeof o2[k]
-    iso1 = typeof o1[k] is 'object' and o2[k] isnt null and 0 is o1[k].constructor.toString().indexOf 'function Object()'
+    iso1 = typeof o1[k] is 'object' and o1[k] isnt null and 0 is o1[k].constructor.toString().indexOf 'function Object()'
     iso2 = typeof o2[k] is 'object' and o2[k] isnt null and 0 is o2[k].constructor.toString().indexOf 'function Object()'
     # console.log iso1, iso2, typeof o1[k] is 'object', o1[k].constructor.toString()
     if iso1 and iso2
