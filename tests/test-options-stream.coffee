@@ -96,22 +96,3 @@ describe 'Options Stream', ->
         array1: [ 1, 2, true, false, 'asdfg' ]
       e(c).to.eql exp
 
-    it 'ion file', ->
-      c = optionsStream "#{__dirname}/config.ion"
-      e(1).to.be 1
-      exp =
-        number1: 1
-        true1: true
-        false1: null
-        string1: 'abcde'
-        string2: "abcde"
-        slash1: "slash'slash"
-        slash2: 'slash"slash'
-        slash3: "slash\tslash"
-        slash4: "slash\nslash"
-        level1:
-          level2: '1'
-          level3:
-            level4: '1'
-        array1: [ "1", "2", "3" ]
-      e(c).to.eql exp

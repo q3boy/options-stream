@@ -16,7 +16,6 @@ bugs:
 dependencies:
   ini: '*'
   yamljs: '0.1.6'
-  ion: '*'
 devDependencies:
   coffee-script: '*'
   mocha: '*'

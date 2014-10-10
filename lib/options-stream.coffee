@@ -2,7 +2,6 @@ fs = require 'fs'
 path = require 'path'
 yaml = require 'yamljs'
 ini = require 'ini'
-ion = require 'ion/lib/ion-min'
 merge = (o1, o2) ->
   for k of o2
     # console.log k, o1[k], o2[k], typeof  o1[k], typeof o2[k]
@@ -38,7 +37,6 @@ module.exports = (args...) ->
         when '.ini' then ini.parse fs.readFileSync(arg).toString()
         when '.json' then JSON.parse fs.readFileSync arg
         when '.yml', '.yaml' then yaml.parse fs.readFileSync(arg).toString().trim()
-        when '.ion' then ion.parse fs.readFileSync(arg).toString().trim().replace /\n/igm, '\r\n'
     else if arg isnt undefined
       merge c, arg
   Object.freeze c if freeze
