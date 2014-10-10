@@ -2,6 +2,6 @@
 /out/test
 /tmp
 /*.sublime*
-
 /.DS_Store
 /coverage.html
+npm-debug.log
